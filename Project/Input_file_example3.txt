@@ -1,0 +1,24 @@
+Sbase (MVA)
+100
+Vbase (kV)
+154
+Number of circuits
+1
+Number of bundle conductors per phase
+4
+Bundle distance (m)
+0.3
+Length of the line (km)
+200
+ACSR conductor name
+Test
+C1 Phase A (centre)
+0
+-4
+C1 Phase B (centre)
+0
+0
+C1 Phase C (centre)
+0
+4
+-999

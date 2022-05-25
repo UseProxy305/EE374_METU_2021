@@ -1,0 +1,156 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Projectstep1</title><meta name="generator" content="MATLAB 9.10"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2021-05-08"><meta name="DC.source" content="Projectstep1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clc;clear <span class="string">all</span>;
+<span class="keyword">function</span> [S_base,V_base,N_circuit,N_bundle,D_bundle,length,conductor_name,outside_diameter,R_AC,GMR_conductor]=e230481_IPEK(text_path,library_path)
+fid = fopen(text_path);
+<span class="keyword">while</span> true
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Sbase (MVA)'</span>
+        S_base=str2double(fgetl(fid))*1000000;
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Vbase (kV)'</span>
+        V_base=str2double(fgetl(fid))*1000;
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Number of circuits'</span>
+        N_circuit=str2double(fgetl(fid));
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Number of bundle conductors per phase'</span>
+        N_bundle=str2double(fgetl(fid));
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Bundle distance (m)'</span>
+        D_bundle=str2double(fgetl(fid));
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'Length of the line (km)'</span>
+        length=str2double(fgetl(fid))*1000;
+    <span class="keyword">end</span>
+    <span class="keyword">if</span> fgetl(fid) == <span class="string">'ACSR conductor name'</span>
+        conductor_name=fgetl(fid);
+        <span class="keyword">break</span>
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+fclose(fid);
+T = readtable(library_path,<span class="string">'VariableNamingRule'</span>,<span class="string">'preserve'</span>); <span class="comment">% converting csv to table T</span>
+names=table2array(T(:,1)); <span class="comment">% Extracting conductor names from table T</span>
+index = find(strcmp(names, conductor_name)); <span class="comment">% Finding index where our conductor is</span>
+outside_diameters=table2array(T(:,5)); <span class="comment">% Extracting outside diameter values from table T</span>
+outside_diameter=outside_diameters(index); <span class="comment">% Finding desired outside diameter in in</span>
+outside_diameter= outside_diameter * 0.0254; <span class="comment">% Converting in to m ( 1 in == 0.0254 m)</span>
+RACs=table2array(T(:,7)); <span class="comment">% Extracting AC resistance values from table T</span>
+R_AC=RACs(index); <span class="comment">% Finding desired outside diameter in ohm/mil</span>
+R_AC= R_AC / 1609.344;  <span class="comment">% Converting ohm/mil to ohm/m ( 1 mil == 1609.344 m)</span>
+GMRconductors=table2array(T(:,8)); <span class="comment">% Extracting AC resistance values from table T</span>
+GMR_conductor=GMRconductors(index); <span class="comment">% Finding desired GMR in ft</span>
+GMR_conductor=GMR_conductor *0.3048; <span class="comment">% Converting ft to m ( 1 ft == 0.3048 m)</span>
+<span class="keyword">end</span>
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2021a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+clc;clear all;
+function [S_base,V_base,N_circuit,N_bundle,D_bundle,length,conductor_name,outside_diameter,R_AC,GMR_conductor]=e230481_IPEK(text_path,library_path)
+fid = fopen(text_path);
+while true
+    if fgetl(fid) == 'Sbase (MVA)'
+        S_base=str2double(fgetl(fid))*1000000;
+    end
+    if fgetl(fid) == 'Vbase (kV)'
+        V_base=str2double(fgetl(fid))*1000;
+    end
+    if fgetl(fid) == 'Number of circuits'
+        N_circuit=str2double(fgetl(fid));
+    end
+    if fgetl(fid) == 'Number of bundle conductors per phase'
+        N_bundle=str2double(fgetl(fid));
+    end
+    if fgetl(fid) == 'Bundle distance (m)'
+        D_bundle=str2double(fgetl(fid));
+    end
+    if fgetl(fid) == 'Length of the line (km)'
+        length=str2double(fgetl(fid))*1000;
+    end
+    if fgetl(fid) == 'ACSR conductor name'
+        conductor_name=fgetl(fid);
+        break
+    end
+end
+fclose(fid);
+T = readtable(library_path,'VariableNamingRule','preserve'); % converting csv to table T
+names=table2array(T(:,1)); % Extracting conductor names from table T
+index = find(strcmp(names, conductor_name)); % Finding index where our conductor is 
+outside_diameters=table2array(T(:,5)); % Extracting outside diameter values from table T
+outside_diameter=outside_diameters(index); % Finding desired outside diameter in in
+outside_diameter= outside_diameter * 0.0254; % Converting in to m ( 1 in == 0.0254 m)
+RACs=table2array(T(:,7)); % Extracting AC resistance values from table T
+R_AC=RACs(index); % Finding desired outside diameter in ohm/mil
+R_AC= R_AC / 1609.344;  % Converting ohm/mil to ohm/m ( 1 mil == 1609.344 m)
+GMRconductors=table2array(T(:,8)); % Extracting AC resistance values from table T
+GMR_conductor=GMRconductors(index); % Finding desired GMR in ft
+GMR_conductor=GMR_conductor *0.3048; % Converting ft to m ( 1 ft == 0.3048 m)
+end
+
+##### SOURCE END #####
+--></body></html>
